@@ -10,7 +10,7 @@
 
 .App-header {
   background-color: #282c34;
-  min-height: 100vh;
+  min-height: 20vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -52,6 +52,7 @@ li {
 
 .read-item {
   background-color: rgb(236, 236, 236);
+  color: rgb(195, 194, 194);
 }
 
 button.mark-read {
@@ -72,4 +73,22 @@ button.mark-read:hover {
   box-shadow: 0 0 5px 2px rgb(3, 0, 0);
   padding: 10px;
   margin: 0 10px;
+}
+
+.search-bar {
+  font: inherit;
+  outline: none;
+  border-radius: 25px;
+  border: none;
+  padding: 20px;
+  width: 50%;
+  height: 15px;
+  margin: 10px 0;
+  box-shadow: 0 0 5px 2px rgb(218, 218, 218);
+  transition: all .3s;
+}
+
+.search-bar:hover,
+.search-bar:focus {
+  box-shadow: 0 0 5px 2px rgb(175, 175, 175);
 }

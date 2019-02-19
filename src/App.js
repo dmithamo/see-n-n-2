@@ -10,6 +10,7 @@ import logo from './logo.svg';
 import './App.css';
 
 import Clock from './_components/clock';
+import SearchBar from './_components/searchbar';
 
 
 const listOfNews = [
@@ -29,9 +30,11 @@ class App extends Component {
     super();
     this.state = {
       news: listOfNews,
+      searchTerm: '',
     };
 
     this.onClick = this.onClickHandler.bind(this);
+    this.onSearchInput = this.onSearchInput.bind(this);
   }
 
   onClickHandler(e, item) {
@@ -52,8 +55,18 @@ class App extends Component {
     this.setState({ news: updatedNews });
   }
 
+  onSearchInput(e) {
+    this.setState({ searchTerm: e.target.value });
+  }
+
   render() {
-    const { news } = this.state;
+    let { news } = this.state;
+    const { searchTerm } = this.state;
+    // Clean up search term the filter
+    news = searchTerm.trim() !== '' ? news.filter(nn => (
+      nn.title.toLowerCase().includes(searchTerm.toLowerCase())
+      || nn.body.toLowerCase().includes(searchTerm.toLowerCase())
+    )) : news;
     return (
       <div className="App">
         <header className="App-header">
@@ -63,6 +76,7 @@ class App extends Component {
             <Clock />
           </p>
         </header>
+        <SearchBar value={searchTerm} onChangeHandler={this.onSearchInput} />
         <ul>
           {news.map(np => (
             <li className={np.read ? 'read-item' : 'unread-item'} key={news.indexOf(np)}>
