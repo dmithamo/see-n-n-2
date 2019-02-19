@@ -31,3 +31,36 @@
     transform: rotate(360deg);
   }
 }
+
+ul {
+  list-style-type: none;
+}
+
+li {
+  padding: 1%;
+  box-shadow: 0 0 5px 2px rgb(218, 218, 218);
+  margin: 15px 0;
+  transition: all .3s;
+}
+
+.unread-item {
+  background-color: none;
+}
+
+.read-item {
+  background-color: rgb(236, 236, 236);
+}
+
+button.mark-read {
+  padding: 10px;
+  box-shadow: 0 0 5px 2px rgb(218, 218, 218);
+  margin: 10px 0;
+  cursor: pointer;
+  transition: all .3s;
+  outline: none;
+  border: none;
+}
+
+button.mark-read:hover {
+  box-shadow: 0 0 5px 2px rgb(163, 163, 163);
+}
