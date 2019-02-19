@@ -11,6 +11,7 @@ import './App.css';
 
 import Clock from './_components/clock';
 import SearchBar from './_components/searchbar';
+import NewsContainer from './_components/newsContainer';
 
 
 const listOfNews = [
@@ -33,11 +34,12 @@ class App extends Component {
       searchTerm: '',
     };
 
-    this.onClick = this.onClickHandler.bind(this);
+    this.onMarkReadHandler = this.onMarkReadHandler.bind(this);
     this.onSearchInput = this.onSearchInput.bind(this);
+    this.filterNews = this.filterNews.bind(this);
   }
 
-  onClickHandler(e, item) {
+  onMarkReadHandler(e, item) {
     e.preventDefault();
     let updatedItem = '';
 
@@ -59,14 +61,25 @@ class App extends Component {
     this.setState({ searchTerm: e.target.value });
   }
 
+  filterNews(searchTerm, news) {
+    // Remove whitespace from search term
+    // eslint-disable-next-line no-param-reassign
+    searchTerm = searchTerm.trim();
+    // Filter by checking title and body and author
+    return (searchTerm !== '' ? news.filter(nn => (
+      nn.title.toLowerCase().includes(searchTerm.toLowerCase())
+      || nn.body.toLowerCase().includes(searchTerm.toLowerCase())
+      || nn.meta.author.toLowerCase().includes(searchTerm.toLowerCase())
+    )) : news);
+  }
+
   render() {
     let { news } = this.state;
     const { searchTerm } = this.state;
-    // Clean up search term the filter
-    news = searchTerm.trim() !== '' ? news.filter(nn => (
-      nn.title.toLowerCase().includes(searchTerm.toLowerCase())
-      || nn.body.toLowerCase().includes(searchTerm.toLowerCase())
-    )) : news;
+
+    // Filter news on search
+    news = this.filterNews(searchTerm, news);
+
     return (
       <div className="App">
         <header className="App-header">
@@ -77,24 +90,7 @@ class App extends Component {
           </p>
         </header>
         <SearchBar value={searchTerm} onChangeHandler={this.onSearchInput} />
-        <ul>
-          {news.map(np => (
-            <li className={np.read ? 'read-item' : 'unread-item'} key={news.indexOf(np)}>
-              <p>{np.title}</p>
-              <p>{np.body}</p>
-              <p>
-                by
-                &nbsp;
-                {np.meta.author}
-                &nbsp;
-                on
-                &nbsp;
-                {np.meta.when}
-              </p>
-              <button type="button" onClick={e => this.onClickHandler(e, np)} className="mark-read">Mark as read</button>
-            </li>
-          ))}
-        </ul>
+        <NewsContainer news={news} markReadHandler={this.onMarkReadHandler} />
       </div>
     );
   }
