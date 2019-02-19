@@ -34,6 +34,9 @@
 
 ul {
   list-style-type: none;
+  width: 90%;
+  margin: auto;
+  padding: 0;
 }
 
 li {
@@ -63,4 +66,10 @@ button.mark-read {
 
 button.mark-read:hover {
   box-shadow: 0 0 5px 2px rgb(163, 163, 163);
+}
+
+.clock {
+  box-shadow: 0 0 5px 2px rgb(3, 0, 0);
+  padding: 10px;
+  margin: 0 10px;
 }

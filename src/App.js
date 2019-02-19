@@ -4,9 +4,12 @@
 /* eslint-disable class-methods-use-this */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable react/jsx-filename-extension */
+
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+
+import Clock from './_components/clock';
 
 
 const listOfNews = [
@@ -55,7 +58,10 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <p>The News App</p>
+          <p>
+            The News at
+            <Clock />
+          </p>
         </header>
         <ul>
           {news.map(np => (
