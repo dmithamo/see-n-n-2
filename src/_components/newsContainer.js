@@ -11,15 +11,13 @@ const NewsContainer = (props) => {
         {news.map(np => (
           <li className={np.read ? 'read-item' : 'unread-item'} key={news.indexOf(np)}>
             <p>{np.title}</p>
-            <p>{np.body}</p>
+            <p>{np.content || np.description}</p>
             <p>
+              {np.publishedAt}
+              &nbsp;
               by
               &nbsp;
-              {np.meta.author}
-              &nbsp;
-              on
-              &nbsp;
-              {np.meta.when}
+              {np.author || 'Anonymous'}
             </p>
             <Button handleClick={e => markReadHandler(e, np)}>Mark as read</Button>
           </li>
@@ -33,8 +31,8 @@ NewsContainer.propTypes = {
   news: PropTypes.arrayOf(
     PropTypes.shape({
       title: PropTypes.string.isRequired,
-      body: PropTypes.string.isRequired,
-      meta: PropTypes.object.isRequired,
+      content: PropTypes.string.isRequired,
+      author: PropTypes.string.isRequired,
     }),
   ).isRequired,
   markReadHandler: PropTypes.func.isRequired,

@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /* eslint-disable jsx-a11y/interactive-supports-focus */
 /* eslint-disable no-console */
 /* eslint-disable no-alert */
@@ -14,29 +15,35 @@ import SearchBar from './_components/searchbar';
 import NewsContainer from './_components/newsContainer';
 
 
-const listOfNews = [
-  {
-    title: 'Dramatic Eye Catching Title Here', body: 'The body, which has little to do with the title', meta: { author: 'Mithamo', when: 'not_now' }, read: false,
-  },
-  {
-    title: 'Another dramatic title Here', body: 'Also body', meta: { author: 'Mithamo', when: 'before_now' }, read: false,
-  },
-  {
-    title: 'Another News Piece', body: 'News Piece Three', meta: { author: 'Mithamo', when: 'earlier_today' }, read: false,
-  },
-];
+// PARAMS FOR API - I KNOW THESE SHOULD BE IN AN ENV FILE. I KNOW
+const API_BASE_URL = 'https://newsapi.org/v2/everything?sources=hacker-news&apiKey=';
+const API_KEY = '0240c7583a744026977e20577dae994b';
 
 class App extends Component {
   constructor() {
     super();
     this.state = {
-      news: listOfNews,
+      news: [],
       searchTerm: '',
     };
 
     this.onMarkReadHandler = this.onMarkReadHandler.bind(this);
     this.onSearchInput = this.onSearchInput.bind(this);
     this.filterNews = this.filterNews.bind(this);
+  }
+
+  componentDidMount() {
+    // Query API for THE NEWS
+    const topNewsURL = `${API_BASE_URL}${API_KEY}`;
+    fetch(topNewsURL)
+      .then(response => response.json())
+      .then((respJSON) => {
+        const { articles } = respJSON;
+        this.setState({
+          news: articles,
+        });
+      })
+      .catch(err => console.log('\n\n\nFETCH ERR: ', err));
   }
 
   onMarkReadHandler(e, item) {
@@ -65,18 +72,19 @@ class App extends Component {
     // Remove whitespace from search term
     // eslint-disable-next-line no-param-reassign
     searchTerm = searchTerm.trim();
+    console.log('\n\n\nNEWS: ', news);
+    console.log('\n\n\nsearchTerm: ', searchTerm);
     // Filter by checking title and body and author
     return (searchTerm !== '' ? news.filter(nn => (
       nn.title.toLowerCase().includes(searchTerm.toLowerCase())
-      || nn.body.toLowerCase().includes(searchTerm.toLowerCase())
-      || nn.meta.author.toLowerCase().includes(searchTerm.toLowerCase())
+      || nn.description.toLowerCase().includes(searchTerm.toLowerCase())
+      || nn.author.toLowerCase().includes(searchTerm.toLowerCase())
     )) : news);
   }
 
   render() {
     let { news } = this.state;
     const { searchTerm } = this.state;
-
     // Filter news on search
     news = this.filterNews(searchTerm, news);
 
