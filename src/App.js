@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 /* eslint-disable no-undef */
 /* eslint-disable jsx-a11y/interactive-supports-focus */
 /* eslint-disable no-console */
@@ -7,6 +8,7 @@
 /* eslint-disable react/jsx-filename-extension */
 
 import React, { Component } from 'react';
+import axios from 'axios';
 import logo from './logo.svg';
 import './App.css';
 
@@ -33,13 +35,14 @@ class App extends Component {
     this.onChangeInterest = this.onChangeInterest.bind(this);
     this.onSearchInput = this.onSearchInput.bind(this);
     this.filterNews = this.filterNews.bind(this);
+    this.onKeyDown = this.onKeyDown.bind(this);
   }
 
   componentDidMount() {
     // Query API for THE NEWS
     const topNewsURL = `${API_BASE_URL}${API_KEY}`;
-    fetch(topNewsURL)
-      .then(response => response.json())
+    axios(topNewsURL)
+      .then(response => response.data)
       .then((respJSON) => {
         const { articles } = respJSON;
         this.setState({
@@ -52,6 +55,12 @@ class App extends Component {
           showSearchBar: false,
         });
       });
+  }
+
+  onKeyDown(e) {
+    e.keyCode === 27 ? this.setState({
+      searchTerm: '',
+    }) : null;
   }
 
   onChangeInterest(e, item) {
@@ -91,8 +100,9 @@ class App extends Component {
     const { searchTerm, showSearchBar, errors } = this.state;
     // Filter news on search
     news = this.filterNews(searchTerm, news);
+
     return (
-      <div className="App">
+      <div onKeyDown={this.onKeyDown} className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <p>
