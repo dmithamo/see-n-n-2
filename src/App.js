@@ -72,11 +72,9 @@ class App extends Component {
     // Remove whitespace from search term
     // eslint-disable-next-line no-param-reassign
     searchTerm = searchTerm.trim();
-    // Filter by checking title and body and author
+    // Filter by checking title and body
     return (searchTerm !== '' ? news.filter(nn => (
       nn.title.toLowerCase().includes(searchTerm.toLowerCase())
-      || nn.description.toLowerCase().includes(searchTerm.toLowerCase())
-      || nn.author.toLowerCase().includes(searchTerm.toLowerCase())
     )) : news);
   }
 
@@ -96,7 +94,7 @@ class App extends Component {
           </p>
         </header>
         <SearchBar value={searchTerm} onChangeHandler={this.onSearchInput} />
-        <NewsContainer news={news} changeInterest={this.onChangeInterest} />
+        <NewsContainer news={!news ? [] : news} changeInterest={this.onChangeInterest} />
       </div>
     );
   }

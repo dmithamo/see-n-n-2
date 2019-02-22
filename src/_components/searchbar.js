@@ -6,7 +6,7 @@ const SearchBar = (props) => {
   const { onChangeHandler, value } = props;
   return (
     <React.Fragment>
-      <input value={value} onChange={onChangeHandler} placeholder="Search ..." className="search-bar" type="text" />
+      <input value={value} onChange={onChangeHandler} placeholder="Filter ..." className="search-bar" type="text" />
     </React.Fragment>
   );
 };

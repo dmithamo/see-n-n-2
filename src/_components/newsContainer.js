@@ -5,29 +5,34 @@ import Button from './button';
 
 const NewsContainer = (props) => {
   const { news, changeInterest } = props;
-  console.log('\n\n\nNEWS: ', news);
   return (
     <React.Fragment>
-      <ul>
-        {news.map(np => (
-          <li className={np.interested ? 'interested-item' : 'uninterested-item'} key={news.indexOf(np)}>
-            <p>{np.title}</p>
-            <p>{np.content || np.description}</p>
-            <p className="meta-data">
-              <span>
-                {new Date(np.publishedAt).toDateString()}
-              </span>
-              <span>
-                <a href={np.url} className="source-anchor">
-                  {np.source.name}
-                </a>
-              </span>
-              &nbsp;
-            </p>
-            <Button handleClick={e => changeInterest(e, np)}>Not interested</Button>
-          </li>
-        ))}
-      </ul>
+      {
+        news.length ? (
+          <ul>
+            {news.map(np => (
+              <li className={np.interested ? 'interested-item' : 'uninterested-item'} key={news.indexOf(np)}>
+                <p>
+                  <a className="anchor-title" href={np.url}>{np.title}</a>
+                </p>
+                <p>{np.content || np.description}</p>
+                <p className="meta-data">
+                  <span>
+                    {new Date(np.publishedAt).toDateString()}
+                  </span>
+                  <span>
+                    <a href={np.url} className="source-anchor">
+                      {np.source.name}
+                    </a>
+                  </span>
+                  &nbsp;
+                </p>
+                <Button handleClick={e => changeInterest(e, np)}>Not interested</Button>
+              </li>
+            ))}
+          </ul>
+        ) : <p>Nothing matching that search criteria</p>
+      }
     </React.Fragment>
   );
 };
