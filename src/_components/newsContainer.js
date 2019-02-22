@@ -5,6 +5,7 @@ import Button from './button';
 
 const NewsContainer = (props) => {
   const { news, changeInterest } = props;
+  console.log('\n\n\nNEWS: ', news);
   return (
     <React.Fragment>
       <ul>
@@ -12,12 +13,16 @@ const NewsContainer = (props) => {
           <li className={np.interested ? 'interested-item' : 'uninterested-item'} key={news.indexOf(np)}>
             <p>{np.title}</p>
             <p>{np.content || np.description}</p>
-            <p>
-              {np.publishedAt}
+            <p className="meta-data">
+              <span>
+                {new Date(np.publishedAt).toDateString()}
+              </span>
+              <span>
+                <a href={np.url} className="source-anchor">
+                  {np.source.name}
+                </a>
+              </span>
               &nbsp;
-              by
-              &nbsp;
-              {np.author || 'Anonymous'}
             </p>
             <Button handleClick={e => changeInterest(e, np)}>Not interested</Button>
           </li>
@@ -32,7 +37,6 @@ NewsContainer.propTypes = {
     PropTypes.shape({
       title: PropTypes.string.isRequired,
       content: PropTypes.string.isRequired,
-      author: PropTypes.string.isRequired,
     }),
   ).isRequired,
   changeInterest: PropTypes.func.isRequired,

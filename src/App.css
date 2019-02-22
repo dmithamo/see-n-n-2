@@ -34,7 +34,7 @@
 
 ul {
   list-style-type: none;
-  width: 90%;
+  width: 50%;
   margin: auto;
   padding: 0;
 }
@@ -55,17 +55,40 @@ li {
   color: rgb(195, 194, 194);
 }
 
-button.mark-interested {
+.clickable {
+  font: inherit;
   padding: 10px;
   box-shadow: 0 0 5px 2px rgb(218, 218, 218);
-  margin: 10px 0;
+  margin: 10px 5px;
   cursor: pointer;
   transition: all .3s;
   outline: none;
   border: none;
 }
 
-button.mark-interested:hover {
+a.source-anchor,
+p.meta-data {
+  text-decoration: none;
+  color: rgb(192, 192, 192);
+}
+
+p.meta-data {
+  width: 30%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+a.source-anchor {
+  background-color: rgb(51, 51, 51);
+  padding: 5px;
+}
+
+a.source-anchor:hover {
+  color: rgb(255, 255, 255);
+  padding: 5px;
+  background-color: rgb(0, 0, 0);
+}
+
+.clickable:hover {
   box-shadow: 0 0 5px 2px rgb(163, 163, 163);
 }
 
