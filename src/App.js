@@ -59,12 +59,10 @@ class App extends Component {
     let updatedItem = '';
 
     // Change state onClick
-    if (e.target.innerHTML === 'Not interested')
-    {
+    if (e.target.innerHTML === 'Not interested') {
       updatedItem = { ...item, interested: true };
       e.target.innerHTML = 'Interested';
-    } else
-    {
+    } else {
       updatedItem = { ...item, interested: false };
       e.target.innerHTML = 'Not interested';
     }
@@ -109,7 +107,7 @@ class App extends Component {
         }
         {
           errors ? <ErrorView errors={`${errors}`} /> : (
-            <NewsContainer news={!news ? [] : news} changeInterest={this.onChangeInterest} />
+            <NewsContainer news={news} changeInterest={this.onChangeInterest} />
           )
         }
       </div>

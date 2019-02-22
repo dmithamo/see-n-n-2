@@ -31,7 +31,7 @@ const NewsContainer = (props) => {
               </li>
             ))}
           </ul>
-        ) : <p>Nothing matching that search criteria</p>
+        ) : <p>Nothing matching that search term</p>
       }
     </React.Fragment>
   );
