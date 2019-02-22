@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 const Button = (props) => {
   const { handleClick, children } = props;
   return (
-    <button type="button" onClick={handleClick} className="mark-read">{children}</button>
+    <button type="button" onClick={handleClick} className="mark-interested">{children}</button>
   );
 };
 

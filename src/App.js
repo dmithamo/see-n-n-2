@@ -27,7 +27,7 @@ class App extends Component {
       searchTerm: '',
     };
 
-    this.onMarkReadHandler = this.onMarkReadHandler.bind(this);
+    this.onChangeInterest = this.onChangeInterest.bind(this);
     this.onSearchInput = this.onSearchInput.bind(this);
     this.filterNews = this.filterNews.bind(this);
   }
@@ -46,17 +46,17 @@ class App extends Component {
       .catch(err => console.log('\n\n\nFETCH ERR: ', err));
   }
 
-  onMarkReadHandler(e, item) {
+  onChangeInterest(e, item) {
     e.preventDefault();
     let updatedItem = '';
 
     // Change state onClick
-    if (e.target.innerHTML === 'Mark as read') {
-      updatedItem = { ...item, read: true };
-      e.target.innerHTML = 'Mark as unread';
+    if (e.target.innerHTML === 'Not interested') {
+      updatedItem = { ...item, interested: true };
+      e.target.innerHTML = 'Interested';
     } else {
-      updatedItem = { ...item, read: false };
-      e.target.innerHTML = 'Mark as read';
+      updatedItem = { ...item, interested: false };
+      e.target.innerHTML = 'Not interested';
     }
     // Map state with changes
     const { news } = this.state;
@@ -72,8 +72,6 @@ class App extends Component {
     // Remove whitespace from search term
     // eslint-disable-next-line no-param-reassign
     searchTerm = searchTerm.trim();
-    console.log('\n\n\nNEWS: ', news);
-    console.log('\n\n\nsearchTerm: ', searchTerm);
     // Filter by checking title and body and author
     return (searchTerm !== '' ? news.filter(nn => (
       nn.title.toLowerCase().includes(searchTerm.toLowerCase())
@@ -98,7 +96,7 @@ class App extends Component {
           </p>
         </header>
         <SearchBar value={searchTerm} onChangeHandler={this.onSearchInput} />
-        <NewsContainer news={news} markReadHandler={this.onMarkReadHandler} />
+        <NewsContainer news={news} changeInterest={this.onChangeInterest} />
       </div>
     );
   }

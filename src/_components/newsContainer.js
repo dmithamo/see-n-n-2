@@ -4,12 +4,12 @@ import PropTypes from 'prop-types';
 import Button from './button';
 
 const NewsContainer = (props) => {
-  const { news, markReadHandler } = props;
+  const { news, changeInterest } = props;
   return (
     <React.Fragment>
       <ul>
         {news.map(np => (
-          <li className={np.read ? 'read-item' : 'unread-item'} key={news.indexOf(np)}>
+          <li className={np.interested ? 'interested-item' : 'uninterested-item'} key={news.indexOf(np)}>
             <p>{np.title}</p>
             <p>{np.content || np.description}</p>
             <p>
@@ -19,7 +19,7 @@ const NewsContainer = (props) => {
               &nbsp;
               {np.author || 'Anonymous'}
             </p>
-            <Button handleClick={e => markReadHandler(e, np)}>Mark as read</Button>
+            <Button handleClick={e => changeInterest(e, np)}>Not interested</Button>
           </li>
         ))}
       </ul>
@@ -35,7 +35,7 @@ NewsContainer.propTypes = {
       author: PropTypes.string.isRequired,
     }),
   ).isRequired,
-  markReadHandler: PropTypes.func.isRequired,
+  changeInterest: PropTypes.func.isRequired,
 };
 
 export default NewsContainer;
