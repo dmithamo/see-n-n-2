@@ -13,6 +13,7 @@ import './App.css';
 import Clock from './_components/clock';
 import SearchBar from './_components/searchbar';
 import NewsContainer from './_components/newsContainer';
+import ErrorView from './_components/errorView';
 
 
 // PARAMS FOR API - I KNOW THESE SHOULD BE IN AN ENV FILE. I KNOW
@@ -25,6 +26,8 @@ class App extends Component {
     this.state = {
       news: [],
       searchTerm: '',
+      showSearchBar: true,
+      errors: null,
     };
 
     this.onChangeInterest = this.onChangeInterest.bind(this);
@@ -43,7 +46,12 @@ class App extends Component {
           news: articles,
         });
       })
-      .catch(err => console.log('\n\n\nFETCH ERR: ', err));
+      .catch((err) => {
+        this.setState({
+          errors: err,
+          showSearchBar: false,
+        });
+      });
   }
 
   onChangeInterest(e, item) {
@@ -51,10 +59,12 @@ class App extends Component {
     let updatedItem = '';
 
     // Change state onClick
-    if (e.target.innerHTML === 'Not interested') {
+    if (e.target.innerHTML === 'Not interested')
+    {
       updatedItem = { ...item, interested: true };
       e.target.innerHTML = 'Interested';
-    } else {
+    } else
+    {
       updatedItem = { ...item, interested: false };
       e.target.innerHTML = 'Not interested';
     }
@@ -80,10 +90,9 @@ class App extends Component {
 
   render() {
     let { news } = this.state;
-    const { searchTerm } = this.state;
+    const { searchTerm, showSearchBar, errors } = this.state;
     // Filter news on search
     news = this.filterNews(searchTerm, news);
-
     return (
       <div className="App">
         <header className="App-header">
@@ -93,8 +102,16 @@ class App extends Component {
             <Clock />
           </p>
         </header>
-        <SearchBar value={searchTerm} onChangeHandler={this.onSearchInput} />
-        <NewsContainer news={!news ? [] : news} changeInterest={this.onChangeInterest} />
+        {
+          showSearchBar ? (
+            <SearchBar value={searchTerm} onChangeHandler={this.onSearchInput} />
+          ) : null
+        }
+        {
+          errors ? <ErrorView errors={`${errors}`} /> : (
+            <NewsContainer news={!news ? [] : news} changeInterest={this.onChangeInterest} />
+          )
+        }
       </div>
     );
   }

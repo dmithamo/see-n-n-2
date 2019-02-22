@@ -130,3 +130,14 @@ a.anchor-title:hover {
 .search-bar:focus {
   box-shadow: 0 0 5px 2px rgb(175, 175, 175);
 }
+
+.error-div {
+  color: red;
+}
+
+.error-header {
+  font-size: 2rem;
+}
+.hidden {
+  display: none;
+}
